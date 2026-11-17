@@ -16,10 +16,20 @@ public class PlayerInteraction : MonoBehaviour
 
     RaycastHit hit;
 
+    [Header("Outline")]
+    [SerializeField] private string outlineLayerName;
+    [SerializeField] private LayerMask outlinedLayer;
+    [SerializeField] private LayerMask defaultLayer;
+
+    private Renderer targetRenderer;
+
+
     void Awake()
     {
          playerInput = GetComponent<PlayerInput>();
         clickAction= playerInput.actions["Click"];
+
+        outlinedLayer = LayerMask.NameToLayer(outlineLayerName);
     }
 
 
@@ -27,18 +37,31 @@ public class PlayerInteraction : MonoBehaviour
     void Update()
     {
         IInteractable newTarget = null;
+        Renderer newTargetRenderer = null;
 
         if(Physics.Raycast(camera.position,camera.forward, out hit, rayDistance))
         {
             newTarget = hit.collider.gameObject.GetComponentInParent<IInteractable>();
+            newTargetRenderer = hit.collider.gameObject.GetComponentInParent<Renderer>();
         }
+            Debug.Log(newTargetRenderer);
 
         if(newTarget != target)
         {
             target = newTarget;
+            targetRenderer = newTargetRenderer;
+
+            //targetRenderer.gameObject.layer = LayerMask.NameToLayer("Not Outline");
+
+            if (target != null && targetRenderer != null)
+            {
+                targetRenderer.gameObject.layer = LayerMask.NameToLayer("Outline");
+            } 
         }
 
-        if(clickAction.WasPressedThisFrame() && target != null)
+        Debug.Log(targetRenderer);
+
+        if (clickAction.WasPressedThisFrame() && target != null)
         {
             target.Interact();
         }
