@@ -2,7 +2,15 @@ using UnityEngine;
 
 public class PickupItem : MonoBehaviour, IInteractable
 {
-    
+    [SerializeField] private PlayerBag playerBag;
+    [SerializeField] private PlayerAbilities playerAbilities;
+
+    void Awake()
+    {
+        playerBag = FindAnyObjectByType<PlayerBag>();
+        playerAbilities = FindAnyObjectByType<PlayerAbilities>();
+    }
+
     void Start()
     {
         
@@ -17,5 +25,18 @@ public class PickupItem : MonoBehaviour, IInteractable
     public void Interact()
     {
         Debug.Log("Picked up this item");
+        playerBag.PickupItem(playerAbilities.PickupAmount);
+        Destroy(gameObject);
+    }
+
+
+    private void CheckAround()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position,playerAbilities.CheckRadius);
+        
+        foreach(Collider col in hitColliders)
+        {
+            col.GetComponent<PickupItem>();
+        }
     }
 }

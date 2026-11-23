@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class PlayerInteraction : MonoBehaviour
 {
     [Header ("Components")]
@@ -17,9 +18,12 @@ public class PlayerInteraction : MonoBehaviour
     RaycastHit hit;
 
     [Header("Outline")]
-    [SerializeField] private string outlineLayerName;
-    [SerializeField] private LayerMask outlinedLayer;
-    [SerializeField] private LayerMask defaultLayer;
+    [SerializeField] private string outlineLayerName = "Outline";
+    [SerializeField] private string defaultLayerName = "Default";
+    
+    
+    private int outlineLayer;
+    private int defaultLayer;
 
     private Renderer targetRenderer;
 
@@ -29,10 +33,11 @@ public class PlayerInteraction : MonoBehaviour
          playerInput = GetComponent<PlayerInput>();
         clickAction= playerInput.actions["Click"];
 
-        outlinedLayer = LayerMask.NameToLayer(outlineLayerName);
+        outlineLayer = LayerMask.NameToLayer(outlineLayerName);
+        defaultLayer = LayerMask.NameToLayer(defaultLayerName);
     }
 
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -43,23 +48,35 @@ public class PlayerInteraction : MonoBehaviour
         {
             newTarget = hit.collider.gameObject.GetComponentInParent<IInteractable>();
             newTargetRenderer = hit.collider.gameObject.GetComponentInParent<Renderer>();
+        } else if(targetRenderer != null && targetRenderer.gameObject.layer == outlineLayer)
+        {
+            targetRenderer.gameObject.layer = defaultLayer;
+            targetRenderer = null; 
         }
-            Debug.Log(newTargetRenderer);
+            //Debug.Log(newTargetRenderer);
 
         if(newTarget != target)
         {
             target = newTarget;
             targetRenderer = newTargetRenderer;
-
-            //targetRenderer.gameObject.layer = LayerMask.NameToLayer("Not Outline");
+           
+            if(target != null && targetRenderer.gameObject.layer == outlineLayer)
+            {
+            targetRenderer.gameObject.layer = defaultLayer;
+            }
 
             if (target != null && targetRenderer != null)
             {
-                targetRenderer.gameObject.layer = LayerMask.NameToLayer("Outline");
+                targetRenderer.gameObject.layer = outlineLayer;
             } 
+
+            if(targetRenderer == null)
+            {
+                
+            }
         }
 
-        Debug.Log(targetRenderer);
+        //Debug.Log(targetRenderer);
 
         if (clickAction.WasPressedThisFrame() && target != null)
         {
