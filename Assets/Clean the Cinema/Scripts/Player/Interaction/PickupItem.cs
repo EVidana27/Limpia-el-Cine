@@ -5,6 +5,8 @@ public class PickupItem : MonoBehaviour, IInteractable
     [SerializeField] private PlayerBag playerBag;
     [SerializeField] private PlayerAbilities playerAbilities;
 
+    [SerializeField] private int itemValue;
+
     void Awake()
     {
         playerBag = FindAnyObjectByType<PlayerBag>();
@@ -26,6 +28,8 @@ public class PickupItem : MonoBehaviour, IInteractable
     {
         Debug.Log("Picked up this item");
         playerBag.PickupItem(playerAbilities.PickupAmount);
+        MoneyManager.instance.AccumulateMoney(itemValue);
+        GameManager.instance.AddToProgress();
         Destroy(gameObject);
     }
 

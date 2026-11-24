@@ -7,6 +7,7 @@ public class RandomInstantiation : MonoBehaviour
     [Header ("Prefabs")]
 
     [SerializeField] private int totalItemAmount;
+    public int TotalItemAmount => totalItemAmount;
     [SerializeField] private GameObject[] cleaningPrefabs;
     void Start()
     {

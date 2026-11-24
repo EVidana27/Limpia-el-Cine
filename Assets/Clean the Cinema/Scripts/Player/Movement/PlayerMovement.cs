@@ -25,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     private InputAction movementAction;
     private InputAction crouchAction;
     private InputAction sprintAction;
+  
+
 
     [Header ("Crouch")]
     private float baseColliderHeight;
@@ -67,6 +69,9 @@ public class PlayerMovement : MonoBehaviour
         movementAction = playerInput.actions["Movement"];
         sprintAction = playerInput.actions["Sprint"];
         crouchAction = playerInput.actions["Crouch"];
+     
+
+
     }
 
     // Update is called once per frame

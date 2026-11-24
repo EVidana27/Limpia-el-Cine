@@ -127,3 +127,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PickupItem
   playerBag: {fileID: 0}
   playerAbilities: {fileID: 0}
+  itemValue: 2

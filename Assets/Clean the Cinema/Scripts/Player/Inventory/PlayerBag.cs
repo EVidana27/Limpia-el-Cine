@@ -35,4 +35,9 @@ public class PlayerBag : MonoBehaviour
             currentBagAmount+=amount;
         }
     }
+
+    public void DepositObjects()
+    {
+        currentBagAmount = 0;
+    }
 }

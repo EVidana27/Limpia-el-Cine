@@ -78,7 +78,7 @@ public class PlayerInteraction : MonoBehaviour
 
         //Debug.Log(targetRenderer);
 
-        if (clickAction.WasPressedThisFrame() && target != null)
+        if (clickAction.WasPressedThisFrame() && target != null && GameManager.instance.currentState == GameState.Playing)
         {
             target.Interact();
         }
