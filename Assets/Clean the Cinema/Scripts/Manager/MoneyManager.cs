@@ -4,6 +4,7 @@ public class MoneyManager : MonoBehaviour
 {
     public static MoneyManager instance;
     [SerializeField] private int currentMoney;
+    public int CurrentMoney => currentMoney;
     [SerializeField] private int accumulatedMoney;
 
     private void Awake()

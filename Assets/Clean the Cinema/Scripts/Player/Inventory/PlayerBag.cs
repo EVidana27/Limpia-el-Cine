@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class PlayerBag : MonoBehaviour
@@ -8,6 +9,10 @@ public class PlayerBag : MonoBehaviour
 
 
     [SerializeField] private int currentBagAmount;
+
+
+    [SerializeField] private TMP_Text capacityTest;
+    [SerializeField] private UpgradeMenu upgradeMenu;
     void Start()
     {
         
@@ -16,7 +21,12 @@ public class PlayerBag : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+     
+        capacityTest.gameObject.SetActive(!upgradeMenu.IsMenuOpen);
+        if (capacityTest.gameObject.activeSelf)
+        {
+            capacityTest.text = currentBagAmount.ToString() + " / " + bagCapacity.ToString();
+        }
     }
 
     public void SetNewBagCapacity(int newCapacity)

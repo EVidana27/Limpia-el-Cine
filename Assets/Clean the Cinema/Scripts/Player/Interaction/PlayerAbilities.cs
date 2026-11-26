@@ -65,4 +65,14 @@ public class PlayerAbilities : MonoBehaviour
         
         depositAmount = newAmount;
     }
+
+    public void UnlockMagnet()
+    {
+        hasMagnetAbility = true;
+    }
+
+    public void UnlockDeposit()
+    {
+        hasDepositAbility = true;
+    }
 }
