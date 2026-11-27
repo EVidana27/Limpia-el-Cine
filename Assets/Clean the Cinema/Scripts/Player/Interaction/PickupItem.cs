@@ -30,17 +30,13 @@ public class PickupItem : MonoBehaviour, IInteractable
         playerBag.PickupItem(playerAbilities.PickupAmount);
         MoneyManager.instance.AccumulateMoney(itemValue);
         GameManager.instance.AddToProgress();
+       
         Destroy(gameObject);
     }
 
 
-    private void CheckAround()
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position,playerAbilities.CheckRadius);
-        
-        foreach(Collider col in hitColliders)
-        {
-            col.GetComponent<PickupItem>();
-        }
-    }
+
+
+
+
 }

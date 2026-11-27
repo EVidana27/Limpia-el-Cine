@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,6 +26,9 @@ public class PlayerAbilities : MonoBehaviour
     private InputAction abilityOneAction;
     private InputAction abilityTwoAction;
 
+    private List<SkillTree> unlockedSkills = new();
+    [SerializeField] private SkillTree skillTreeData;
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -42,37 +46,25 @@ public class PlayerAbilities : MonoBehaviour
         
     }
 
-    public void UpgradePickupAmount(int newAmount)
-    {
-        pickupAmount = newAmount;
-    }
-
-    public void UpgradePickupRange(float newRange)
-    {
-        checkRadius = newRange;
-    }
-
-    public void UpgradeMagnetAmount(int newAmount)
+    private void MagnetAbilitiy()
     {
         if (!hasMagnetAbility) return;
 
-        magnetAmount = newAmount;
-    }
-
-    public void UpgradeDepositAmount(int newAmount)
-    {
-        if(!hasDepositAbility) return;
         
-        depositAmount = newAmount;
+
+
+
     }
 
-    public void UnlockMagnet()
+    private bool TryToUnlockAbility(SkillTree skill)
     {
-        hasMagnetAbility = true;
+        if(unlockedSkills.Contains(skill) || MoneyManager.instance.CurrentMoney < skill.moneyCost) return false;
+
+        if (skill.prerequisites != null) return false;
+
+        return false;
+        
     }
 
-    public void UnlockDeposit()
-    {
-        hasDepositAbility = true;
-    }
+    
 }
